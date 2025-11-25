@@ -13,7 +13,7 @@ class CoralReafPlugin(build_common.CoralPluginType):
     # pylint: disable=too-few-public-methods
     def __init__(self):
         super().__init__(REAF_PLUGIN_NAME,
-                         need_lustre_for_build=True,
+                         need_lustre_for_build=False,
                          is_devel=False)
 
     def cpt_build(self, log, workspace, local_host, source_dir, target_cpu,
