@@ -34,7 +34,7 @@ class CoralE2fsprogsCommand():
         local_host = ssh_host.get_local_host(ssh=False)
         source_dir = os.getcwd()
         release_dict = \
-            reaf_release_common.get_full_lustre_release_dict(log, local_host, source_dir)
+            reaf_release_common.get_full_e2fsprogs_release_dict(log, local_host, source_dir)
         if release_dict is None:
             cmd_general.cmd_exit(log, -1)
         if full_name not in release_dict:
@@ -46,7 +46,7 @@ class CoralE2fsprogsCommand():
         cache_type_dir = (constant.CORAL_BUILD_CACHE + "/" + cache_type)
         iso_cache_dir = cache_type_dir + "/" + constant.ISO_CACHE_FNAME
         if is_local:
-            source_release_dirs = source_dir + "/" + constant.LUSTRE_RELEASES_DIRNAME
+            source_release_dirs = source_dir + "/" + constant.E2FSPROGS_RELEASES_DIRNAME
         else:
             source_release_dirs = constant.LUSTRE_RELEASES_DIR
         source_release_dir = source_release_dirs + "/" + short_name
