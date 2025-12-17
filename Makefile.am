@@ -193,7 +193,7 @@ coral-$(PACKAGE_VERSION).$(DISTRO_SHORT).$(target_cpu).iso: $(ISO_EXTRA)
 		for CORAL_PACKAGE in $(CORAL_PACKAGES); do \
 			cp debs/coral-$${CORAL_PACKAGE}_$${DEB_PACKAGE_VERSION}_*.deb $(PACKAGE_PATH); \
 		done; \
-	elif [ "$(DISTRO_SHORT)" = "el7" -o "$(DISTRO_SHORT)" = "el8" ]; then \
+	elif [ "$(DISTRO_SHORT)" = "el7" -o "$(DISTRO_SHORT)" = "el8" -o "$(DISTRO_SHORT)" = "el9" ]; then \
 		for CORAL_PACKAGE in $(CORAL_PACKAGES); do \
 			cp build/RPMS/$(target_cpu)/coral-$${CORAL_PACKAGE}-$(PACKAGE_VERSION)-$(CORAL_RELEASE).$(DISTRO_SHORT)*.$(target_cpu).rpm $(PACKAGE_PATH); \
 		done; \
@@ -202,7 +202,7 @@ coral-$(PACKAGE_VERSION).$(DISTRO_SHORT).$(target_cpu).iso: $(ISO_EXTRA)
 		echo "Unsupported distro $(DISTRO_SHORT)"; \
 		exit 1; \
 	fi
-	@if [ "$(DISTRO_SHORT)" = "el8" ]; then \
+	@if [ "$(DISTRO_SHORT)" = "el8" -o "$(DISTRO_SHORT)" = "el9" ]; then \
 		repo2module -s stable $(PACKAGE_PATH) $(PACKAGE_PATH)/modules.yaml; \
 		modifyrepo --mdtype=modules $(PACKAGE_PATH)/modules.yaml $(PACKAGE_PATH)/repodata; \
 	fi

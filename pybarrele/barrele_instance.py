@@ -20,7 +20,7 @@ BARRELE_COLLECT_INTERVAL = 60
 BARRELE_CONTINUOUS_QUERY_PERIODS = 4
 # The Lustre version to use, if the Lustre RPMs installed on the agent(s)
 # is not with the supported version.
-BARRELE_LUSTRE_FALLBACK_VERSION = "2.15"
+BARRELE_LUSTRE_FALLBACK_VERSION = "2.16"
 # Default dir of Barreleye data
 BARRELE_DATA_DIR = "/var/log/coral/barreleye_data"
 

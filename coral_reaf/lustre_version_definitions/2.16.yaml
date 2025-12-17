@@ -1,0 +1,23 @@
+#
+# Definition file of Lustre 2.16 version (YAML format)
+#
+priority: 2016001
+lustre_version: '2.16'
+rpm_patterns:
+    kernel: '^(kernel-[45].+\.rpm)$'
+    kernel_core: '^(kernel-core-[45].+\.rpm)$'
+    kernel_modules: '^(kernel-modules-[45].+\.rpm)$'
+    lustre: '^(lustre-2\.16.+\.rpm)$'
+    lustre_iokit: '^(lustre-iokit-2\.16.+\.rpm)$'
+    lustre_kmod: '^(kmod-lustre-2\.16.+\.rpm)$'
+    lustre_osd_ldiskfs: '^(kmod-lustre-osd-ldiskfs-2\.16.+\.rpm)$'
+    lustre_osd_ldiskfs_mount: '^(lustre-osd-ldiskfs-mount-2\.16.+\.rpm)$'
+    lustre_osd_zfs: '^(kmod-lustre-osd-zfs-2\.16.+\.rpm)$'
+    lustre_osd_zfs_mount: '^(lustre-osd-zfs-mount-2\.16.+\.rpm)$'
+    lustre_tests: '^(lustre-tests-2\.16.+\.rpm)$'
+    lustre_tests_kmod: '^(kmod-lustre-tests-2\.16.+\.rpm)$'
+    lustre_devel: '^(lustre-devel-2\.16.+\.rpm)$'
+    lustre_client: '^(lustre-client-2\.16.+\.rpm)$'
+    lustre_kmod_client: '^(kmod-lustre-client-2\.16.+\.rpm)$'
+deb_pattern: '^(2\.16\..+)$'
+collectd_definition_file: "lustre-2.16.m4"
