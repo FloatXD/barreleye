@@ -822,7 +822,7 @@ class CoralInstallHost():
                          local_host.sh_hostname)
             return -1
 
-        if distro not in [os_distro.DISTRO_RHEL7, os_distro.DISTRO_RHEL8,
+        if distro not in [os_distro.DISTRO_RHEL7, os_distro.DISTRO_RHEL8, os_distro.DISTRO_RHEL9,
                           os_distro.DISTRO_UBUNTU2004, os_distro.DISTRO_UBUNTU2204]:
             log.cl_error("unsupported distro [%s] of host [%s]",
                          distro, hostname)

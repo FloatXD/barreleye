@@ -2067,12 +2067,14 @@ class LustreDistribution():
                          host.sh_hostname)
             return -1
         if distro not in [os_distro.DISTRO_RHEL7,
-                          os_distro.DISTRO_RHEL8]:
+                          os_distro.DISTRO_RHEL8,
+                          os_distro.DISTRO_RHEL9]:
             log.cl_error("unsupported distro [%s] on host [%s]",
                          distro, host.sh_hostname)
             return -1
 
         log.cl_info("installing Lustre kernel RPM on host [%s]", host.sh_hostname)
+        log.cl_info("ldis_lustre_rpm_dict: %s", self.ldis_lustre_rpm_dict)
         if lustre_version.LVD_RPM_KERNEL_FIRMWARE in self.ldis_lustre_rpm_dict:
             rpm_name = self.ldis_lustre_rpm_dict[lustre_version.LVD_RPM_KERNEL_FIRMWARE]
             command = ("rpm -ivh --force %s/%s" %
@@ -2085,15 +2087,19 @@ class LustreDistribution():
                              command, host.sh_hostname, retval.cr_exit_status,
                              retval.cr_stdout, retval.cr_stderr)
                 return -1
-
+        log.cl_info("ldis_lustre_rpm_dict: %s", self.ldis_lustre_rpm_dict)
         rpm_name = self.ldis_lustre_rpm_dict[lustre_version.LVD_RPM_KERNEL]
         command = ("rpm -ivh --force %s/%s" %
                    (self.ldis_lustre_rpm_dir, rpm_name))
+        log.cl_info("ldis_lustre_rpm_dict222: %s", self.ldis_lustre_rpm_dict)
         if lustre_version.LVD_RPM_KERNEL_CORE in self.ldis_lustre_rpm_dict:
             rpm_name = self.ldis_lustre_rpm_dict[lustre_version.LVD_RPM_KERNEL_CORE]
             command += " " + self.ldis_lustre_rpm_dir + "/" + rpm_name
         if lustre_version.LVD_RPM_KERNEL_MODULES in self.ldis_lustre_rpm_dict:
             rpm_name = self.ldis_lustre_rpm_dict[lustre_version.LVD_RPM_KERNEL_MODULES]
+            command += " " + self.ldis_lustre_rpm_dir + "/" + rpm_name
+        if lustre_version.LVD_RPM_KERNEL_MODULES_CORE in self.ldis_lustre_rpm_dict:
+            rpm_name = self.ldis_lustre_rpm_dict[lustre_version.LVD_RPM_KERNEL_MODULES_CORE]
             command += " " + self.ldis_lustre_rpm_dir + "/" + rpm_name
         retval = host.sh_run(log, command,
                              timeout=constant.LONGEST_TIME_RPM_INSTALL)

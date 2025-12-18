@@ -33,7 +33,7 @@ from pybuild import build_version
 PYINSTALLER_TARBALL_URL = "https://github.com/pyinstaller/pyinstaller/archive/refs/tags/v4.10.tar.gz"
 # The sha1sum of pyinstaller tarball. Need to update together with
 # PYINSTALLER_TARBALL_URL
-PYINSTALLER_TARBALL_SHA1SUM = "60c595f5cbe66223d33c6edf1bb731ab9f02c3de"
+PYINSTALLER_TARBALL_SHA1SUM = "525ef640688c1e49cc690d582bd41cd497d497b2"
 # "v4.10.tar.gz" is not a good name, specify the fname to save.
 PYINSTALLER_TABALL_FNAME = "pyinstaller-4.10.tar.gz"
 REPLACE_DEB_DICT = {}
@@ -276,6 +276,10 @@ def download_dependent_rpms(log, host, distro, target_cpu,
                                             packages_dir, dependent_rpms,
                                             extra_package_fnames)
     elif distro == os_distro.DISTRO_RHEL8:
+        ret = download_dependent_rpms_rhel8(log, host, packages_dir,
+                                            dependent_rpms,
+                                            extra_package_fnames)
+    elif distro == os_distro.DISTRO_RHEL9:
         ret = download_dependent_rpms_rhel8(log, host, packages_dir,
                                             dependent_rpms,
                                             extra_package_fnames)
@@ -536,7 +540,7 @@ def download_dependent_packages(log, host, source_dir, distro, target_cpu,
     """
     Download packages for Barreleye.
     """
-    if distro in (os_distro.DISTRO_RHEL7, os_distro.DISTRO_RHEL8):
+    if distro in (os_distro.DISTRO_RHEL7, os_distro.DISTRO_RHEL8, os_distro.DISTRO_RHEL9):
         return download_dependent_rpms(log, host, distro, target_cpu,
                                        packages_dir, extra_package_fnames,
                                        extra_package_names)
@@ -636,6 +640,8 @@ def _install_build_dependency_rhel(log, workspace, host, distro, target_cpu,
         command = 'yum -y groupinstall "Development Tools"'
     elif distro == os_distro.DISTRO_RHEL8:
         command = 'dnf groupinstall -y --nobest "Development Tools"'
+    elif distro == os_distro.DISTRO_RHEL9:
+        command = 'yum -y groupinstall "Development Tools"'
     else:
         return -1
     retval = host.sh_run(log, command, timeout=None)
@@ -669,8 +675,7 @@ def _install_build_dependency_rhel(log, workspace, host, distro, target_cpu,
                            "python36-psutil",  # Used by Python codes
                            "python3-devel",  # Needed by building Python libraries
                            ]
-    else:
-        assert distro == os_distro.DISTRO_RHEL8
+    elif distro == os_distro.DISTRO_RHEL8:
         dependent_pips += ["pylint"]  # Needed for Python codes check
         dependent_rpms += ["createrepo_c",  # To create the repo in ISO
                            "python3-psutil",  # Used by Python codes
@@ -683,6 +688,13 @@ def _install_build_dependency_rhel(log, workspace, host, distro, target_cpu,
                          host.sh_hostname)
             return -1
         dependent_rpms += rpms
+    elif distro == os_distro.DISTRO_RHEL9:
+        dependent_pips += ["pylint"]  # Needed for Python codes check
+        dependent_rpms += ["createrepo_c",  # To create the repo in ISO
+                           "python3-psutil",  # Used by Python codes
+                           "python3-devel",  # Needed by building Python libraries
+                           ]
+
 
     # Upgrade pip3 first since python packages might need new pip3 to install
     log.cl_info("upgrading pip")

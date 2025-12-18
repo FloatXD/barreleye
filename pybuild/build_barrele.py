@@ -442,6 +442,8 @@ def collectd_build_and_check_rhel(log, host, target_cpu, packages_dir,
         distro_number = "7"
     elif distro == os_distro.DISTRO_RHEL8:
         distro_number = "8"
+    elif distro == os_distro.DISTRO_RHEL9:
+        distro_number = "9"
     else:
         log.cl_error("build Barreleye on distro [%s] is not supported yet", distro)
         return -1
@@ -824,7 +826,7 @@ def collectd_build_and_check(log, host, source_dir, type_cache,
     If existing Collectd packages are not complete, build them.
     """
     distro = host.sh_distro(log)
-    if distro in (os_distro.DISTRO_RHEL7, os_distro.DISTRO_RHEL8):
+    if distro in (os_distro.DISTRO_RHEL7, os_distro.DISTRO_RHEL8, os_distro.DISTRO_RHEL9):
         return collectd_build_and_check_rhel(log, host, target_cpu,
                                              packages_dir,
                                              collectd_src_dir,
@@ -1336,6 +1338,8 @@ class CoralBarrelePlugin(build_common.CoralPluginType):
         if distro == os_distro.DISTRO_RHEL7:
             return COLLECTD_BUILD_DEPENDENT_RHEL7_RPMS
         if distro == os_distro.DISTRO_RHEL8:
+            return COLLECTD_BUILD_DEPENDENT_RHEL8_RPMS
+        if distro == os_distro.DISTRO_RHEL9:
             return COLLECTD_BUILD_DEPENDENT_RHEL8_RPMS
         if distro in (os_distro.DISTRO_UBUNTU2004,
                       os_distro.DISTRO_UBUNTU2204):

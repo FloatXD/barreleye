@@ -136,7 +136,7 @@ class ParallelExecute():
                 reason = ("different array length for thread IDs [%d] and "
                           "arguments [%d]" %
                           (len(thread_ids), len(args_array)))
-                raise Exception(reason)
+                raise ValueError(reason)
         for args in args_array:
             thread_id = thread_ids[thread_index]
             parallel_thread = ParallelThread(self, thread_index, main, args,
