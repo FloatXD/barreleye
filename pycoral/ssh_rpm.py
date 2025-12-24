@@ -46,7 +46,7 @@ class SSHHostRPMMixin():
             log.cl_error("failed to get distro of host [%s]",
                          self.sh_hostname)
             return -1
-        if distro not in (os_distro.DISTRO_RHEL7, os_distro.DISTRO_RHEL8):
+        if distro not in (os_distro.DISTRO_RHEL7, os_distro.DISTRO_RHEL8,os_distro.DISTRO_RHEL9):
             log.cl_error("unsupported distro [%s] of host [%s]",
                          distro, self.sh_hostname)
             return -1

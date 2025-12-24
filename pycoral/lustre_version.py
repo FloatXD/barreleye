@@ -23,6 +23,7 @@ LVD_RPM_KERNEL_CORE = "kernel_core"
 # detection. Will be installed during Lustre installation if defined. Will
 # not be installed if not.
 LVD_RPM_KERNEL_MODULES = "kernel_modules"
+LVD_RPM_KERNEL_MODULES_CORE = "kernel_modules_core"
 # Kernel formware RPM. Not required in a Lustre version. Not used in version
 # detection. Will be installed during Lustre installation if defined. Will
 # not be installed if not.
@@ -241,6 +242,14 @@ class LustreVersionDatabase():
 
         # Try to find all RPMs that is not in LUSTRE_REQUIRED_RPM_TYPES or
         # LUSTRE_CLIENT_REQUIRED_RPM_TYPES
+
+        #输出matched_version.lv_rpm_pattern_dict
+        log.cl_info("Lustre version [%s] RPM pattern: %s",
+                    matched_version.lv_version_name,
+                    matched_version.lv_rpm_pattern_dict)
+
+
+
         for rpm_type in matched_version.lv_rpm_pattern_dict:
             if rpm_type in matched_rpm_type_dict:
                 continue
@@ -400,6 +409,7 @@ def load_lustre_version_database(log, local_host, directory):
     for fname in fnames:
         fpath = directory + "/" + fname
         version = load_lustre_version_definition(log, fpath)
+
         if version is None:
             log.cl_error("failed to load Lustre version from [%s]",
                          fpath)
